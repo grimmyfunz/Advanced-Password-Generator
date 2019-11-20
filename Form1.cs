@@ -154,48 +154,14 @@ namespace Passgen
         {
             if (!checkBox7.Checked)
             {
-                //BASIC ENABLED
-                checkBox1.Enabled = true;
-                checkBox2.Enabled = true;
-                checkBox3.Enabled = true;
-                checkBox4.Enabled = true;
-                checkBox5.Enabled = true;
-                //ADVANCED DISABLED
-                checkBox6.Checked = false;
-                checkBox8.Checked = false;
-                checkBox9.Checked = false;
-                checkBox6.Enabled = false;
-                checkBox8.Enabled = false;
-                checkBox9.Enabled = false;
-                textBox4.Enabled = false;
-                textBox2.Enabled = false;
-                button2.Enabled = false;
-                button3.Enabled = false;
+                DisableAdvanced();
             }
             else
             {
-                //BASIC DISABLED
-                checkBox1.Enabled = false;
-                checkBox2.Enabled = false;
-                checkBox3.Enabled = false;
-                checkBox4.Enabled = false;
-                checkBox5.Enabled = false;
-                checkBox10.Enabled = false;
-                checkBox11.Enabled = false;
-                checkBox1.Checked = false;
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
-                checkBox4.Checked = false;
-                checkBox5.Checked = false;
-                checkBox10.Checked = false;
-                checkBox11.Checked = false;
-                //ADVANCED ENABLED
-                checkBox6.Enabled = true;
-                checkBox8.Enabled = true;
-                checkBox9.Enabled = true;
+                EnableAdvanced();
             }
             UpdateDIF();
-            clearEP();
+            ClearEP();
         }
 
         private void checkBox6_CheckedChanged(object sender, EventArgs e) //CUSTOM
@@ -216,14 +182,14 @@ namespace Passgen
                 checkBox9.Checked = false;
             }
             UpdateDIF();
-            clearEP();
+            ClearEP();
         }
 
 
         private void textBox2_TextChanged(object sender, EventArgs e) //CUSTOM TEXT CHANGING
         {
             UpdateDIF();
-            clearEP();
+            ClearEP();
         }
 
         private void checkBox8_CheckedChanged(object sender, EventArgs e) //FILE
@@ -243,7 +209,7 @@ namespace Passgen
                 checkBox9.Checked = false;
             }
             UpdateDIF();
-            clearEP();
+            ClearEP();
         }
 
         private void button2_Click(object sender, EventArgs e) //FILE OPEN BUTTON
@@ -264,7 +230,7 @@ namespace Passgen
                 }
             }
             UpdateDIF();
-            clearEP();
+            ClearEP();
         }
 
         private void checkBox9_CheckedChanged(object sender, EventArgs e) //URL
@@ -275,7 +241,7 @@ namespace Passgen
                 button3.Enabled = false;
                 checkBox6.Enabled = true;
                 checkBox8.Enabled = true;
-                clearEP();
+                ClearEP();
             }
             else
             {
@@ -296,7 +262,7 @@ namespace Passgen
             {
                 linkArr = ReadfromURL();
                 UpdateDIF();
-                clearEP();
+                ClearEP();
             }
             else
             {
@@ -371,128 +337,8 @@ namespace Passgen
 
         private void button1_Click(object sender, EventArgs e) //GENERATE BUTTON
         {
-                errorProvider4.Clear();
-                password = Generate();
-                if (password != "ERROR")
-                {
-                    if (checkBox12.Checked) //BULK
-                    {
-                        SaveFileDialog sfd = new SaveFileDialog();
-                        sfd.Filter = "Text File|*.txt";
-                        sfd.FileName = "Bulk";
-                        sfd.Title = "Save Text File";
-                        if (sfd.ShowDialog() == DialogResult.OK)
-                        {
-                           string path = sfd.FileName;
-                           StreamWriter bw = new StreamWriter(File.Create(path));
-                           for (int i = 0; i < numericUpDown1.Value; i++)
-                           {
-                                if (checkBox13.Checked)
-                                {
-                                login = GenerateLogin();
-                                if (checkBox14.Checked)
-                                {
-                                    while (uniqueLogin.Exists(x => x == login))
-                                    {
-                                        login = GenerateLogin();
-                                    }
-                                    uniqueLogin.Add(login);
-                                }
-                                bw.Write($"{login} : ");
-                                }
-
-                                password = Generate();
-                                if (checkBox14.Checked)
-                                {
-                                    while (uniquePswd.Exists(x => x == password))
-                                    {
-                                        password = Generate();
-                                    }
-                                uniquePswd.Add(password);
-                                }
-                                bw.WriteLine(password);
-                           }
-                           bw.Dispose();
-                           uniquePswd.Clear();
-                           uniqueLogin.Clear();
-
-                            if (checkBox15.Checked)
-                            {
-                                bool isEmailValid = Regex.IsMatch(textBox3.Text, emailPattern);
-                                if (isEmailValid)
-                                {
-                                    sendEmail(textBox3.Text, "Bulk Passwords", "Your generated passwords is added as attachment.", path);
-                                    if (checkBox13.Checked)
-                                    {
-                                    MessageBox.Show("Passwords and logins are generated, and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Passwords are generated and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show("You need to enter valid EMAIL.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    errorProvider4.SetError(textBox3, "You need to enter valid EMAIL");
-                                }
-                            }
-                        }
-                    }
-                    else //BASIC
-                    {
-                        Clipboard.SetText(password);
-                        textBox1.Text = password;
-                        if (checkBox15.Checked)
-                        {
-                            bool isEmailValid = Regex.IsMatch(textBox3.Text, emailPattern);
-                            if (isEmailValid)
-                            {
-                                sendEmail(textBox3.Text, "Password", $"Your password is : {password}");
-                                MessageBox.Show("Password generated, coppied to clipboard and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                            else
-                            {
-                                MessageBox.Show("You need to enter valid EMAIL.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                errorProvider4.SetError(textBox3, "You need to enter valid EMAIL");
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Password generated and coppied to clipboard!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                else
-                {
-                    if (checkBox7.Checked)
-                    {
-                        if (checkBox6.Checked) //CUSTOM
-                        {
-                            MessageBox.Show("You need to fill custom field with valid symbols.", "Invalid Symbols", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            errorProvider1.SetError(textBox2, "You need to fill custom field with valid symbols");
-                        }
-                        else if (checkBox8.Checked) //FROM FILE
-                        {
-                            MessageBox.Show("You need to open valid file.", "File Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            errorProvider2.SetError(label3, "You need to fill custom field with valid symbols");
-                        }
-                        else if (checkBox9.Checked) //LINK
-                        {
-                            MessageBox.Show("You need to read valid URL.", "URL Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            errorProvider3.SetError(textBox4, "You need to read valid URL");
-                        }
-                        else
-                        {
-                            MessageBox.Show("You need check at least one option.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("You need check at least one option.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
+            StartGenerate();
+        }
 
         public string Generate() //GENERATION FUNCTION
         {
@@ -646,7 +492,7 @@ namespace Passgen
             }
         }
 
-        private void sendEmail(string toAdress, string subject, string body, string attachmentFile)
+        private void SendEmail(string toAdress, string subject, string body, string attachmentFile)
         {
             try
             {
@@ -668,7 +514,7 @@ namespace Passgen
             }
         }
 
-        private void sendEmail(string toAdress, string subject, string body)
+        private void SendEmail(string toAdress, string subject, string body)
         {
             try
             {
@@ -686,11 +532,234 @@ namespace Passgen
             }
         }
 
-        private void clearEP()
+        private void ClearEP()
         {
             errorProvider1.Clear();
             errorProvider2.Clear();
             errorProvider3.Clear();
+        }
+
+        private void easyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisableAdvanced();
+
+            trackBar1.Value = 8;
+            checkBox1.Checked = true;
+            checkBox2.Checked = true;
+
+            StartGenerate();
+        }
+
+        private void mediumToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisableAdvanced();
+
+            trackBar1.Value = 16;
+            checkBox1.Checked = true;
+            checkBox3.Checked = true;
+            checkBox2.Checked = true;
+            checkBox4.Checked = true;
+
+            StartGenerate();
+        }
+
+        private void hardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisableAdvanced();
+
+            trackBar1.Value = 24;
+            checkBox1.Checked = true;
+            checkBox3.Checked = true;
+            checkBox2.Checked = true;
+            checkBox4.Checked = true;
+
+            StartGenerate();
+        }
+
+        private void impossibleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisableAdvanced();
+
+            trackBar1.Value = 36;
+            checkBox1.Checked = true;
+            checkBox3.Checked = true;
+            checkBox2.Checked = true;
+            checkBox4.Checked = true;
+            checkBox11.Checked = true;
+
+            StartGenerate();
+        }
+
+        private void DisableAdvanced()
+        {
+            //BASIC ENABLED
+            checkBox1.Enabled = true;
+            checkBox2.Enabled = true;
+            checkBox3.Enabled = true;
+            checkBox4.Enabled = true;
+            checkBox5.Enabled = true;
+            //ADVANCED DISABLED
+            checkBox6.Checked = false;
+            checkBox8.Checked = false;
+            checkBox9.Checked = false;
+            checkBox6.Enabled = false;
+            checkBox8.Enabled = false;
+            checkBox9.Enabled = false;
+            textBox4.Enabled = false;
+            textBox2.Enabled = false;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            //ADVANCED TOGGLE
+            checkBox7.Checked = false;
+        }
+        private void EnableAdvanced()
+        {
+            //BASIC DISABLED
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
+            checkBox3.Enabled = false;
+            checkBox4.Enabled = false;
+            checkBox5.Enabled = false;
+            checkBox10.Enabled = false;
+            checkBox11.Enabled = false;
+            checkBox1.Checked = false;
+            checkBox2.Checked = false;
+            checkBox3.Checked = false;
+            checkBox4.Checked = false;
+            checkBox5.Checked = false;
+            checkBox10.Checked = false;
+            checkBox11.Checked = false;
+            //ADVANCED ENABLED
+            checkBox6.Enabled = true;
+            checkBox8.Enabled = true;
+            checkBox9.Enabled = true;
+            //ADVANCED TOGGLE
+            checkBox7.Checked = true;
+        }
+
+        private void StartGenerate()
+        {
+            errorProvider4.Clear();
+            password = Generate();
+            if (password != "ERROR")
+            {
+                if (checkBox12.Checked) //BULK
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Filter = "Text File|*.txt";
+                    sfd.FileName = "Bulk";
+                    sfd.Title = "Save Text File";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        string path = sfd.FileName;
+                        StreamWriter bw = new StreamWriter(File.Create(path));
+                        for (int i = 0; i < numericUpDown1.Value; i++)
+                        {
+                            if (checkBox13.Checked)
+                            {
+                                login = GenerateLogin();
+                                if (checkBox14.Checked)
+                                {
+                                    while (uniqueLogin.Exists(x => x == login))
+                                    {
+                                        login = GenerateLogin();
+                                    }
+                                    uniqueLogin.Add(login);
+                                }
+                                bw.Write($"{login} : ");
+                            }
+
+                            password = Generate();
+                            if (checkBox14.Checked)
+                            {
+                                while (uniquePswd.Exists(x => x == password))
+                                {
+                                    password = Generate();
+                                }
+                                uniquePswd.Add(password);
+                            }
+                            bw.WriteLine(password);
+                        }
+                        bw.Dispose();
+                        uniquePswd.Clear();
+                        uniqueLogin.Clear();
+
+                        if (checkBox15.Checked)
+                        {
+                            bool isEmailValid = Regex.IsMatch(textBox3.Text, emailPattern);
+                            if (isEmailValid)
+                            {
+                                SendEmail(textBox3.Text, "Bulk Passwords", "Your generated passwords is added as attachment.", path);
+                                if (checkBox13.Checked)
+                                {
+                                    MessageBox.Show("Passwords and logins are generated, and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Passwords are generated and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("You need to enter valid EMAIL.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                errorProvider4.SetError(textBox3, "You need to enter valid EMAIL");
+                            }
+                        }
+                    }
+                }
+                else //BASIC
+                {
+                    Clipboard.SetText(password);
+                    textBox1.Text = password;
+                    if (checkBox15.Checked)
+                    {
+                        bool isEmailValid = Regex.IsMatch(textBox3.Text, emailPattern);
+                        if (isEmailValid)
+                        {
+                            SendEmail(textBox3.Text, "Password", $"Your password is : {password}");
+                            MessageBox.Show("Password generated, coppied to clipboard and email is sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("You need to enter valid EMAIL.", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            errorProvider4.SetError(textBox3, "You need to enter valid EMAIL");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Password generated and coppied to clipboard!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            else
+            {
+                if (checkBox7.Checked)
+                {
+                    if (checkBox6.Checked) //CUSTOM
+                    {
+                        MessageBox.Show("You need to fill custom field with valid symbols.", "Invalid Symbols", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        errorProvider1.SetError(textBox2, "You need to fill custom field with valid symbols");
+                    }
+                    else if (checkBox8.Checked) //FROM FILE
+                    {
+                        MessageBox.Show("You need to open valid file.", "File Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        errorProvider2.SetError(label3, "You need to fill custom field with valid symbols");
+                    }
+                    else if (checkBox9.Checked) //LINK
+                    {
+                        MessageBox.Show("You need to read valid URL.", "URL Invalid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        errorProvider3.SetError(textBox4, "You need to read valid URL");
+                    }
+                    else
+                    {
+                        MessageBox.Show("You need check at least one option.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("You need check at least one option.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
     }
 }
