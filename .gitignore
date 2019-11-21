@@ -17,3 +17,9 @@ obj/Debug/Passgen.csproj.GenerateResource.cache
 bin/Debug/Passgen.exe
 bin/Debug/Passgen.pdb
 *.ide
+obj/Debug/Passgen.pdb
+obj/Debug/Passgen.exe
+obj/Debug/Passgen.csprojAssemblyReference.cache
+bin/Debug/Passgen.pdb
+bin/Debug/Passgen.exe
+.vs/Passgen/v16/.suo
