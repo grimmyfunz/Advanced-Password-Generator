@@ -1,63 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Media;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Passgen
 {
     public partial class Form1 : Form
     {
-        public string lowcharArr;
-        public string uppcharArr;
-        public string numericArr;
-        public string basicSymbolArr;
-        public string specialSymbolArr;
-        public string customArr;
-        public string fileArr;
-        public string linkArr;
-        public string rezArr;
-        public string password;
-        public string gen;
-        public string login;
-        public Random rand;
-        string urlPattern;
-        string emailPattern;
-        public bool isPlaying;
-        public SoundPlayer simpleSound;
-        public List<String> uniquePswd;
-        public List<String> uniqueLogin;
-        public SmtpClient SmtpServer;
-        public Bitmap easyBMP;
-        public Bitmap middleBMP;
-        public Bitmap hardBMP;
-        public Bitmap impossibleBMP;
+        private const string lowcharArr = "qwertyuiopasdfghjklzxcvbnm";
+        private const string uppcharArr = "QWERTYUIOPASDFGHJKLZXCVBNM";
+        private const string numericArr = "1234567890";
+        private const string basicSymbolArr = "!@#$%^&*()_+-/*";
+        private const string specialSymbolArr = "★☆✡☮☸♈♉☪♊♋♌♍♎♏♐♑♒♓☤☥☧☨☩☫☬☭☯☽☾✙✚✛✜✝✞✟†⊹‡♁♆❖♅✠✢卍卐〷☠☢☣☦ϟ☀☁☂☃☄☉☼☽☾♁♨❄❅❆";
+        private string fileArr, linkArr, rezArr, password, gen, login;
+        private Random rand;
+        private const string urlPattern = @"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)";
+        private const string emailPattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
+        private SoundPlayer musicPlayer;
+        private List<String> uniquePswd, uniqueLogin;
+        private SmtpClient SmtpServer;
+        private Bitmap easyBMP, middleBMP, hardBMP, impossibleBMP;
 
         private void Form1_Load(object sender, EventArgs e) //FORM INITIALIZE
         {
-            simpleSound = new SoundPlayer(@"D:\Downloads\427728__lemigoga__22-musica-ambiente.wav");
-            simpleSound.PlayLooping();
-            isPlaying = true;
-            lowcharArr = "qwertyuiopasdfghjklzxcvbnm";
-            uppcharArr = "QWERTYUIOPASDFGHJKLZXCVBNM";
-            numericArr = "1234567890";
-            basicSymbolArr = "!@#$%^&*()_+-/*";
-            specialSymbolArr = "★☆✡☮☸♈♉☪♊♋♌♍♎♏♐♑♒♓☤☥☧☨☩☫☬☭☯☽☾✙✚✛✜✝✞✟†⊹‡♁♆❖♅✠✢卍卐〷☠☢☣☦ϟ☀☁☂☃☄☉☼☽☾♁♨❄❅❆";
-            customArr = "";
+            musicPlayer = new SoundPlayer(@"D:\Downloads\427728__lemigoga__22-musica-ambiente.wav");
+            musicPlayer.PlayLooping();
             fileArr = "";
             linkArr = "";
             rand = new Random();
-            urlPattern = @"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"; // URL address pattern 
-            emailPattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
             uniqueLogin = new List<string>();
             uniquePswd = new List<string>();
             SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -271,7 +246,7 @@ namespace Passgen
             }
         }
 
-        public string ReadfromURL() //URL Read function
+        private string ReadfromURL() //URL Read function
         {
             HttpWebRequest webRequest =
             (HttpWebRequest)HttpWebRequest.Create(textBox4.Text);
@@ -289,11 +264,11 @@ namespace Passgen
             musicToolStripMenuItem.Checked = !musicToolStripMenuItem.Checked;
             if (musicToolStripMenuItem.Checked)
             {
-                simpleSound.PlayLooping();
+                musicPlayer.PlayLooping();
             }
             else
             {
-                simpleSound.Stop();
+                musicPlayer.Stop();
             }
         }
 
@@ -339,7 +314,7 @@ namespace Passgen
             StartGenerate();
         }
 
-        public string Generate() //GENERATION FUNCTION
+        private string Generate() //GENERATION FUNCTION
         {
             rezArr = "";
             gen = "";
@@ -397,21 +372,21 @@ namespace Passgen
             }
         }
 
-        public string GenerateLogin() //LOGIN GENERATOR
+        private string GenerateLogin() //LOGIN GENERATOR
         {
             string loginGen = GenerateName(rand.Next(4, 7));
-            loginGen += rand.Next(0, 9999);
+            loginGen += rand.Next(9999);
             return loginGen;
         }
 
-        public string GenerateName(int len) //NAME GENERATOR (USED BY LOGIN GENERATOR)
+        private string GenerateName(int len) //NAME GENERATOR (USED BY LOGIN GENERATOR)
         {
-            string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "sh", "zh", "t", "v", "w", "x" };
-            string[] vowels = { "a", "e", "i", "o", "u", "ae", "y" };
+            string[] consonants = { "b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "l", "n", "p", "q", "r", "s", "t", "v", "w", "x" };
+            string[] vowels = { "a", "e", "i", "o", "u", "y" };
             string Name = "";
             Name += consonants[rand.Next(consonants.Length)].ToUpper();
             Name += vowels[rand.Next(vowels.Length)];
-            int b = 2; //b tells how many times a new letter has been added. It's 2 right now because the first two letters are already in the name.
+            int b = 2;
             while (b < len)
             {
                 Name += consonants[rand.Next(consonants.Length)];
@@ -422,7 +397,7 @@ namespace Passgen
             return Name;
         }
 
-        public void UpdateDIF() //UPDATE PROGRESSBAR / IMAGE
+        private void UpdateDIF() //UPDATE PROGRESSBAR / IMAGE
         {
             double k = 0;
             if (checkBox7.Checked)

@@ -24,3 +24,5 @@ bin/Debug/Passgen.pdb
 bin/Debug/Passgen.exe
 .vs/Passgen/v16/.suo
 .vscode/launch.json
+.vs/Passgen/v16/.suo
+*.cache
