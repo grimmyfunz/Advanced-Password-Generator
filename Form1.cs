@@ -72,7 +72,6 @@ namespace Passgen
             hardBMP = new Bitmap(Properties.Resources._3);
             impossibleBMP = new Bitmap(Properties.Resources._4);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            //KEK
         }
 
         public Form1()
