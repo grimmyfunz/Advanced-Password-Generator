@@ -21,15 +21,15 @@ namespace Passgen
         private Random rand;
         private const string urlPattern = @"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)";
         private const string emailPattern = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
-        //private SoundPlayer musicPlayer;
+        private SoundPlayer musicPlayer;
         private List<String> uniquePswd, uniqueLogin;
         private SmtpClient SmtpServer;
         private Bitmap easyBMP, middleBMP, hardBMP, impossibleBMP;
 
         private void Form1_Load(object sender, EventArgs e) //FORM INITIALIZE
         {
-            //musicPlayer = new SoundPlayer(@"D:\Downloads\427728__lemigoga__22-musica-ambiente.wav");
-            //musicPlayer.PlayLooping();
+            musicPlayer = new SoundPlayer(Properties.Resources.music);
+            musicPlayer.PlayLooping();
             fileArr = "";
             linkArr = "";
             rand = new Random();
@@ -264,11 +264,11 @@ namespace Passgen
             musicToolStripMenuItem.Checked = !musicToolStripMenuItem.Checked;
             if (musicToolStripMenuItem.Checked)
             {
-                //musicPlayer.PlayLooping();
+                musicPlayer.PlayLooping();
             }
             else
             {
-                //musicPlayer.Stop();
+                musicPlayer.Stop();
             }
         }
 
