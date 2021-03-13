@@ -466,7 +466,7 @@
             this.supportDeveloperToolStripMenuItem1.Name = "supportDeveloperToolStripMenuItem1";
             this.supportDeveloperToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.supportDeveloperToolStripMenuItem1.Text = "Support developer";
-            this.supportDeveloperToolStripMenuItem1.Click += new System.EventHandler(this.supportDeveloperToolStripMenuItem1_Click);
+            //this.supportDeveloperToolStripMenuItem1.Click += new System.EventHandler(this.supportDeveloperToolStripMenuItem1_Click);
             // 
             // Form1
             // 

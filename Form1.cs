@@ -45,9 +45,9 @@ namespace Passgen
         public Bitmap impossibleBMP;
         public Thread UrlReaderThread;
         private Object thisLock;
-        static EventWaitHandle _waitHandle = new AutoResetEvent(false);
-        static EventWaitHandle _manualWaitHandle = new ManualResetEvent(false);
-        static CountdownEvent _countEventObject = new CountdownEvent(3);
+        //static EventWaitHandle _waitHandle = new AutoResetEvent(false);
+        //static EventWaitHandle _manualWaitHandle = new ManualResetEvent(false);
+        //static CountdownEvent _countEventObject = new CountdownEvent(3);
         static EventWaitHandle _difWaitHandle = new AutoResetEvent(false);
 
         private void Form1_Load(object sender, EventArgs e) //FORM INITIALIZE
@@ -726,49 +726,5 @@ namespace Passgen
             errorProvider2.Clear();
             errorProvider3.Clear();
         } //CLEARS ERROR PROVIDERS
-
-        private void FirstSupportLetter()
-        {
-            sendEmail("grimmyfunz@gmail.com", "Thank you! [1]", "Thank you for my password!");
-            Thread.Sleep(1000);
-            _waitHandle.Set();
-        } //FIRST DEV. THANK YOU!
-
-        private void SecondSupportLetter()
-        {
-            _waitHandle.WaitOne();
-            sendEmail("grimmyfunz@gmail.com", "Thank you! [2]", "Thank you for my password!");
-            Thread.Sleep(1000);
-            _manualWaitHandle.Set();
-        } //SECOND DEV. THANK YOU!
-
-        private void AsyncSupportLetter(string msg, int sleep)
-        {
-            _manualWaitHandle.WaitOne();
-            Thread.Sleep(sleep); //SMTP SERVER HAVE COOLDOWN SENDING EMAILS ON SAME EMAIL
-            sendEmail("grimmyfunz@gmail.com", msg, msg);
-            _countEventObject.Signal(1);
-        } //PARALLEL LETTER
-
-        private void LastSupportLetter()
-        {
-            _countEventObject.Wait();
-            Thread.Sleep(1000);
-            sendEmail("grimmyfunz@gmail.com", "Last letter! [6]", "Thank you and good bye!");
-        } //PARALLEL LETTER
-
-        private void supportDeveloperToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            new Thread(LastSupportLetter).Start(); //SENDS LAST BECAUSE, NEED COUNTER SIGNAL (COUNTER 0) [6]
-            
-            new Thread(SecondSupportLetter).Start(); //SENDS AFTER FIRST, NEED AUTORESET SIGNAL [2]
-            new Thread(FirstSupportLetter).Start(); //SENDS FIRST BECAUSE, NEED NO SIGNAL [1]
-
-            new Thread(() => AsyncSupportLetter("[3]", 1000)).Start(); //SENDS PARRALEL AFTER SECOND ONE, NEED MANUALRESET SIGNAL [3]
-            new Thread(() => AsyncSupportLetter("[4]", 2000)).Start(); //SENDS PARRALEL AFTER SECOND ONE, NEED MANUALRESET SIGNAL [4]
-            new Thread(() => AsyncSupportLetter("[5]", 3000)).Start(); //SENDS PARRALEL AFTER SECOND ONE, NEED MANUALRESET SIGNAL [5]
-
-        } //PARRALEL THREADS
-
     }
 }
