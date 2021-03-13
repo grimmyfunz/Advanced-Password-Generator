@@ -7,12 +7,14 @@ C:\Users\grimm\OneDrive\El Studento\Programmesana\C#\Passgen\obj\Debug\Passgen.P
 C:\Users\grimm\OneDrive\El Studento\Programmesana\C#\Passgen\obj\Debug\Passgen.csproj.GenerateResource.cache
 C:\Users\grimm\OneDrive\El Studento\Programmesana\C#\Passgen\obj\Debug\Passgen.exe
 C:\Users\grimm\OneDrive\El Studento\Programmesana\C#\Passgen\obj\Debug\Passgen.pdb
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\bin\Debug\Passgen.exe.config
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\bin\Debug\Passgen.exe
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\bin\Debug\Passgen.pdb
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.csprojAssemblyReference.cache
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.Form1.resources
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.Properties.Resources.resources
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.csproj.GenerateResource.cache
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.exe
-C:\Users\grimm\OneDrive\GIT\Advanced-Password-Generator\obj\Debug\Passgen.pdb
+C:\Users\grimm\OneDrive\El Studento\Programmesana\C#\Passgen\obj\Debug\Passgen.csproj.CoreCompileInputs.cache
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.csprojAssemblyReference.cache
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.Form1.resources
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.Properties.Resources.resources
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.csproj.GenerateResource.cache
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.csproj.CoreCompileInputs.cache
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.pdb
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\bin\Debug\Passgen.exe.config
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\bin\Debug\Passgen.exe
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\bin\Debug\Passgen.pdb
+C:\Users\grimm\OneDrive\C# Projects\Advanced-Password-Generator\obj\Debug\Passgen.exe
